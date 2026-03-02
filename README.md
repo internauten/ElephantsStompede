@@ -135,3 +135,7 @@ npm run build
 ```bash
 npm uninstall --save-dev sharp png-to-ico
 ```
+
+## Lizenz
+
+Dieses Projekt steht unter der MIT-Lizenz. Details siehe `LICENSE`.
