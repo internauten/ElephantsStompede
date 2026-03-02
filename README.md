@@ -56,6 +56,26 @@ npm install
 npm start
 ```
 
+## Deployment auf GitHub Pages
+
+Der Workflow ist in `.github/workflows/deploy-pages.yml` hinterlegt.
+
+### Einrichtung (einmalig)
+
+1. Repository auf GitHub öffnen.
+2. Unter **Settings > Pages** bei **Source** auf **GitHub Actions** stellen.
+3. Sicherstellen, dass der Default-Branch `main` ist (oder den Workflow entsprechend anpassen).
+
+### Deployment auslösen
+
+- Automatisch bei Push auf `main`.
+- Oder manuell über den Workflow **Deploy to GitHub Pages**.
+
+Hinweis: Der Build-Pfad (`base`) wird im Workflow automatisch korrekt gesetzt:
+
+- User/Org-Page (`<user>.github.io`) -> `/`
+- Projektseite (`<user>.github.io/<repo>`) -> `/<repo>/`
+
 ## Favicon aus `elephant.gif` neu erzeugen
 
 Ausgangsdatei: `public/elephant.gif`  

@@ -9,15 +9,17 @@ type Elephant = {
 const TOTAL_ELEPHANTS = 20;
 const MINUTE_MS = 60_000;
 const DURATION_OPTIONS_MINUTES = [2, 4, 6] as const;
+const assetPath = (fileName: string): string =>
+  `${import.meta.env.BASE_URL}${fileName}`;
 const DURATION_IMAGE_BY_MINUTES: Record<
   (typeof DURATION_OPTIONS_MINUTES)[number],
   string
 > = {
-  2: '/eier2min.png',
-  4: '/eier4min.png',
-  6: '/eier6min.png',
+  2: assetPath('eier2min.png'),
+  4: assetPath('eier4min.png'),
+  6: assetPath('eier6min.png'),
 };
-const ELEPHANT_IMAGE_PATH = '/elephant.gif';
+const ELEPHANT_IMAGE_PATH = assetPath('elephant.gif');
 const FALLBACK_SIZE = 120;
 
 registerSW({ immediate: true });
