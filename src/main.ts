@@ -34,6 +34,25 @@ const scene = document.createElement('div');
 scene.className = 'scene';
 app.append(scene);
 
+const infoContainer = document.createElement('div');
+infoContainer.className = 'info';
+
+const infoButton = document.createElement('button');
+infoButton.className = 'info-button';
+infoButton.type = 'button';
+infoButton.setAttribute('aria-label', 'Installationshinweise anzeigen');
+infoButton.textContent = 'i';
+
+const infoTooltip = document.createElement('div');
+infoTooltip.className = 'info-tooltip';
+infoTooltip.innerHTML =
+  '<strong>Eieruhr als PWA installieren</strong><br><br>' +
+  'iOS (Safari): Teilen → Zum Home-Bildschirm → Hinzufügen.<br><br>' +
+  'Android (Chrome): App installieren oder Zum Startbildschirm hinzufügen.';
+
+infoContainer.append(infoButton, infoTooltip);
+scene.append(infoContainer);
+
 const durationControls = document.createElement('div');
 durationControls.className = 'duration-controls';
 scene.append(durationControls);

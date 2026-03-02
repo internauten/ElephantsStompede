@@ -56,6 +56,33 @@ npm install
 npm start
 ```
 
+## PWA-Installation auf iOS und Android
+
+Voraussetzung: Die App läuft über `https://` (oder lokal über `localhost`).
+
+### iOS (Safari)
+
+1. App in Safari öffnen.
+2. Auf **Teilen** tippen.
+3. **Zum Home-Bildschirm** auswählen.
+4. Optional Namen anpassen und mit **Hinzufügen** bestätigen.
+
+### Android (Chrome)
+
+1. App in Chrome öffnen.
+2. Im Browser-Menü auf **App installieren** tippen.
+	- Falls nicht sichtbar: **Zum Startbildschirm hinzufügen** wählen.
+3. Installation bestätigen.
+
+Hinweis: Nach der Installation startet die App im Standalone-Modus (ohne Browser-Adressleiste).
+Für iOS wird zusätzlich ein `apple-touch-icon` verwendet (`public/apple-touch-icon.png`).
+
+### Wenn "App installieren" in Chrome nicht erscheint
+
+- Die Seite muss über `https://` laufen (Ausnahme: `localhost`).
+- Für einen realistischen lokalen Test: zuerst `npm run build`, dann `npm run preview` und die Vorschau-URL öffnen.
+- Auf Android kann die Option je nach Chrome-Version auch **Zum Startbildschirm hinzufügen** heißen.
+
 ## Deployment auf GitHub Pages
 
 Der Workflow ist in `.github/workflows/deploy-pages.yml` hinterlegt.
