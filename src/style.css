@@ -86,6 +86,7 @@ body,
 .info:focus-within .info-tooltip {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 .duration-button {
@@ -158,4 +159,13 @@ body,
   transform: scale(0);
   opacity: 0;
   filter: sepia(1) saturate(4.8) hue-rotate(-50deg) brightness(0.95) contrast(1.1);
+}
+
+a {
+    color: palegoldenrod;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }

@@ -1,5 +1,7 @@
 # Elephants Stompede (oder Eieruhr)
 
+Eine Elefantenherde die sich langsam auflöst. Eine moderne Eieruhr!
+
 ## Projektbeschreibung
 
 Diese App zeigt 20 Elefanten-Bilder zufällig über den gesamten Bildschirm verteilt.
@@ -71,7 +73,7 @@ Voraussetzung: Die App läuft über `https://` (oder lokal über `localhost`).
 
 1. App in Chrome öffnen.
 2. Im Browser-Menü auf **App installieren** tippen.
-	- Falls nicht sichtbar: **Zum Startbildschirm hinzufügen** wählen.
+   - Falls nicht sichtbar: **Zum Startbildschirm hinzufügen** wählen.
 3. Installation bestätigen.
 
 Hinweis: Nach der Installation startet die App im Standalone-Modus (ohne Browser-Adressleiste).
@@ -154,7 +156,7 @@ npm run favicon:generate
 npm run build
 ```
 
-## Hinweise
+### Hinweise
 
 - Das Projekt referenziert das Favicon bereits in `index.html` und im PWA-Manifest (`vite.config.ts`).
 - Wenn du nur einmalig konvertierst, kannst du die Tools danach wieder entfernen:
@@ -163,6 +165,12 @@ npm run build
 npm uninstall --save-dev sharp png-to-ico
 ```
 
+## Projektverlauf
+
+Ca. 90% dieses Code wurde von GPT-5.3-Codex generiert. Insgesammt wurden ca. 4 Stunden aufgewendet.
+
 ## Lizenz
 
 Dieses Projekt steht unter der MIT-Lizenz. Details siehe `LICENSE`.
+
+Copyright (c) 2026 die.internauten.ch

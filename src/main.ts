@@ -52,7 +52,9 @@ infoTooltip.className = "info-tooltip";
 infoTooltip.innerHTML =
   "<strong>Eieruhr als PWA installieren</strong><br><br>" +
   "iOS (Safari): Teilen → Zum Home-Bildschirm → Hinzufügen.<br><br>" +
-  "Android (Chrome): App installieren oder Zum Startbildschirm hinzufügen.";
+  "Android (Chrome): App installieren oder Zum Startbildschirm hinzufügen.<br><br>" +
+  "So funktioniert die Eieruhr auch ohne Internetverbindung und kann z.B. als Eieruhr in der Küche genutzt werden.<br><br>" +
+  "Copyright (c) 2026 die.internauten.ch - Siehe <a href='https://github.com/internauten/ElephantsStompede' target='_blank' rel='noopener'>https://github.com/internauten/ElephantsStompede</a> für weitere Informationen, Quelltext und Lizenzinformationen.";
 
 infoContainer.append(infoButton, remainingTimeLabel, infoTooltip);
 scene.append(infoContainer);
