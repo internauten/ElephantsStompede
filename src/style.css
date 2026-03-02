@@ -35,6 +35,17 @@ body,
   top: 16px;
   left: 16px;
   z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.remaining-time {
+  color: #e2e8f0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 .info-button {

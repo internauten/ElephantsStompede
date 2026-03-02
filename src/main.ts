@@ -43,6 +43,10 @@ infoButton.type = "button";
 infoButton.setAttribute("aria-label", "Installationshinweise anzeigen");
 infoButton.textContent = "i";
 
+const remainingTimeLabel = document.createElement("span");
+remainingTimeLabel.className = "remaining-time";
+remainingTimeLabel.textContent = "00:00";
+
 const infoTooltip = document.createElement("div");
 infoTooltip.className = "info-tooltip";
 infoTooltip.innerHTML =
@@ -50,7 +54,7 @@ infoTooltip.innerHTML =
   "iOS (Safari): Teilen → Zum Home-Bildschirm → Hinzufügen.<br><br>" +
   "Android (Chrome): App installieren oder Zum Startbildschirm hinzufügen.";
 
-infoContainer.append(infoButton, infoTooltip);
+infoContainer.append(infoButton, remainingTimeLabel, infoTooltip);
 scene.append(infoContainer);
 
 const durationControls = document.createElement("div");
@@ -98,6 +102,8 @@ let baseElephantWidth = FALLBACK_SIZE;
 let baseElephantHeight = FALLBACK_SIZE;
 let elephantWidth = FALLBACK_SIZE;
 let elephantHeight = FALLBACK_SIZE;
+let countdownEndAt = 0;
+let countdownIntervalId: number | null = null;
 
 void initialize();
 
@@ -133,6 +139,18 @@ function placeRandomly(element: HTMLImageElement): void {
   element.style.top = `${y}px`;
 }
 
+function placeRandomlyInTopThird(element: HTMLImageElement): void {
+  const { width, height } = getSceneSize();
+  const maxX = Math.max(0, width - elephantWidth);
+  const topThirdHeight = height / 3;
+  const maxTopThirdY = Math.max(0, topThirdHeight - elephantHeight);
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxTopThirdY;
+
+  element.style.left = `${x}px`;
+  element.style.top = `${y}px`;
+}
+
 function keepInsideViewport(element: HTMLImageElement): void {
   const currentX = parseFloat(element.style.left || "0");
   const currentY = parseFloat(element.style.top || "0");
@@ -155,6 +173,8 @@ function startDisappearing(allElephants: Elephant[]): void {
     }
 
     if (remaining.length === 0) {
+      stopCountdown();
+      setRemainingTime(0);
       restartButton.classList.add("is-visible");
       return;
     }
@@ -182,6 +202,7 @@ function startDisappearing(allElephants: Elephant[]): void {
 
 function resetScene(): void {
   activeRunId += 1;
+  startCountdown();
   restartButton.classList.remove("is-visible");
   scene.style.setProperty("--shrink-duration", `${getShrinkDurationMs()}ms`);
 
@@ -190,6 +211,13 @@ function resetScene(): void {
   }
 
   elephants = [];
+  const guaranteedTopCount = Math.random() < 0.5 ? 1 : 2;
+  const topThirdIndices = new Set<number>();
+
+  while (topThirdIndices.size < guaranteedTopCount) {
+    const randomIndex = Math.floor(Math.random() * TOTAL_ELEPHANTS);
+    topThirdIndices.add(randomIndex);
+  }
 
   for (let index = 0; index < TOTAL_ELEPHANTS; index += 1) {
     const elephant = document.createElement("img");
@@ -200,12 +228,53 @@ function resetScene(): void {
     elephant.height = elephantHeight;
     elephant.style.zIndex = `${index + 1}`;
 
-    placeRandomly(elephant);
+    if (topThirdIndices.has(index)) {
+      placeRandomlyInTopThird(elephant);
+    } else {
+      placeRandomly(elephant);
+    }
     scene.append(elephant);
     elephants.push({ id: index, element: elephant });
   }
 
   startDisappearing(elephants);
+}
+
+function startCountdown(): void {
+  countdownEndAt = Date.now() + selectedTotalDurationMs;
+  setRemainingTime(selectedTotalDurationMs);
+  stopCountdown();
+
+  countdownIntervalId = window.setInterval(() => {
+    const remainingMs = Math.max(0, countdownEndAt - Date.now());
+    setRemainingTime(remainingMs);
+
+    if (remainingMs === 0) {
+      stopCountdown();
+    }
+  }, 250);
+}
+
+function stopCountdown(): void {
+  if (countdownIntervalId === null) {
+    return;
+  }
+
+  window.clearInterval(countdownIntervalId);
+  countdownIntervalId = null;
+}
+
+function setRemainingTime(remainingMs: number): void {
+  remainingTimeLabel.textContent = formatRemainingTime(remainingMs);
+}
+
+function formatRemainingTime(remainingMs: number): string {
+  const totalSeconds = Math.ceil(remainingMs / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const paddedMinutes = String(minutes).padStart(2, "0");
+  const paddedSeconds = String(seconds).padStart(2, "0");
+  return `${paddedMinutes}:${paddedSeconds}`;
 }
 
 async function initialize(): Promise<void> {
