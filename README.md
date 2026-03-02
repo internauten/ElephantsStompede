@@ -76,6 +76,34 @@ Hinweis: Der Build-Pfad (`base`) wird im Workflow automatisch korrekt gesetzt:
 - User/Org-Page (`<user>.github.io`) -> `/`
 - Projektseite (`<user>.github.io/<repo>`) -> `/<repo>/`
 
+## Release per Git-Tag
+
+Der Release-Workflow liegt in `.github/workflows/release.yml` und wird bei Tag-Push gestartet.
+
+### Gültiges Tag-Format (SemVer)
+
+Erlaubte Beispiele:
+
+- `v1.2.3`
+- `v1.2.3-rc.1`
+- `v1.2.3+build.5`
+
+Nicht erlaubt sind z. B. `v1`, `v1.2` oder `release-1.2.3`.
+
+### Release auslösen
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Der Workflow führt dann automatisch aus:
+
+- `npm ci`
+- `npm run build`
+- ZIP-Erstellung aus `dist`
+- GitHub Release inkl. automatisch generierter Release Notes und ZIP-Asset
+
 ## Favicon aus `elephant.gif` neu erzeugen
 
 Ausgangsdatei: `public/elephant.gif`  
