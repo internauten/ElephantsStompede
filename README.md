@@ -1,4 +1,4 @@
-# Elephants Stompede
+# Elephants Stompede (oder Eieruhr)
 
 ## Projektbeschreibung
 
@@ -16,6 +16,7 @@ werden (Standalone-Modus mit Service Worker und Manifest).
 
 - 20 Bilder werden beim Start zufällig im Viewport positioniert.
 - Dynamische Bildgröße basierend auf den echten Maßen von `public/elephant.gif`.
+- Zeitsteuerung über Buttons `2 Minuten`, `4 Minuten`, `6 Minuten`.
 - Sequentielles Verschwinden mit Schrumpf-Animation.
 - Reihenfolge: Vordergrund zuerst (reverse Einfügereihenfolge via `z-index`).
 - Neustart per Button `Neu starten`.
@@ -27,6 +28,7 @@ werden (Standalone-Modus mit Service Worker und Manifest).
 - `src/style.css`: Layout, Button-Styling, Shrink-Animation.
 - `vite.config.ts`: Vite- und PWA-Konfiguration.
 - `public/elephant.gif`: Bildquelle für alle Elefanten.
+- `public/eier2min.png`, `public/eier4min.png`, `public/eier6min.png`: Transparente Icons für die Zeitbuttons.
 - `public/favicon.ico`: Favicon für Browser/PWA.
 - `scripts/generate-favicon.mjs`: Konvertierung GIF -> ICO.
 
@@ -35,16 +37,17 @@ werden (Standalone-Modus mit Service Worker und Manifest).
 Die wichtigsten Parameter findest du in `src/main.ts` und kannst sie direkt dort anpassen:
 
 - `TOTAL_ELEPHANTS`: Anzahl der angezeigten Bilder.
-- `SHRINK_DURATION_MS`: Dauer pro Bild bis zum vollständigen Verschwinden (in Millisekunden).
+- `DURATION_OPTIONS_MINUTES`: Auswahl der Gesamtzeit (Buttons).
 - `ELEPHANT_IMAGE_PATH`: Pfad zur verwendeten Bilddatei.
 
 Beispiele:
 
-- `SHRINK_DURATION_MS = 5000` entspricht 5 Sekunden.
+- `DURATION_OPTIONS_MINUTES = [2, 4, 6]` zeigt drei Zeitbuttons.
 - `TOTAL_ELEPHANTS = 20` zeigt 20 Bilder.
 
-Hinweis: Die CSS-Animation übernimmt die Dauer automatisch aus `SHRINK_DURATION_MS`
-und bleibt dadurch mit dem Entfernen der Bilder synchron.
+Hinweis: Die Dauer pro Elefant wird automatisch aus der gewählten Gesamtzeit
+berechnet (`Gesamtzeit / TOTAL_ELEPHANTS`). Damit verschwindet der letzte
+Elefant exakt nach der ausgewählten Zeit.
 
 ## Entwicklung starten
 

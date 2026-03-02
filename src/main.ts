@@ -7,7 +7,16 @@ type Elephant = {
 };
 
 const TOTAL_ELEPHANTS = 20;
-const SHRINK_DURATION_MS = 5_000;
+const MINUTE_MS = 60_000;
+const DURATION_OPTIONS_MINUTES = [2, 4, 6] as const;
+const DURATION_IMAGE_BY_MINUTES: Record<
+  (typeof DURATION_OPTIONS_MINUTES)[number],
+  string
+> = {
+  2: '/eier2min.png',
+  4: '/eier4min.png',
+  6: '/eier6min.png',
+};
 const ELEPHANT_IMAGE_PATH = '/elephant.gif';
 const FALLBACK_SIZE = 120;
 
@@ -21,8 +30,40 @@ if (!app) {
 
 const scene = document.createElement('div');
 scene.className = 'scene';
-scene.style.setProperty('--shrink-duration', `${SHRINK_DURATION_MS}ms`);
 app.append(scene);
+
+const durationControls = document.createElement('div');
+durationControls.className = 'duration-controls';
+scene.append(durationControls);
+
+let selectedTotalDurationMs = DURATION_OPTIONS_MINUTES[0] * MINUTE_MS;
+
+for (const minutes of DURATION_OPTIONS_MINUTES) {
+  const durationButton = document.createElement('button');
+  durationButton.className = 'duration-button';
+  durationButton.type = 'button';
+  durationButton.dataset.minutes = `${minutes}`;
+
+  const icon = document.createElement('img');
+  icon.className = 'duration-button-icon';
+  icon.src = DURATION_IMAGE_BY_MINUTES[minutes];
+  icon.alt = '';
+  icon.setAttribute('aria-hidden', 'true');
+
+  const label = document.createElement('span');
+  label.className = 'duration-button-label';
+  label.textContent = `${minutes} Minuten`;
+
+  durationButton.append(icon, label);
+
+  durationButton.addEventListener('click', () => {
+    selectedTotalDurationMs = minutes * MINUTE_MS;
+    setSelectedDurationButton(minutes);
+    resetScene();
+  });
+
+  durationControls.append(durationButton);
+}
 
 const restartButton = document.createElement('button');
 restartButton.className = 'restart-button';
@@ -72,6 +113,7 @@ function keepInsideViewport(element: HTMLImageElement): void {
 function startDisappearing(allElephants: Elephant[]): void {
   const runId = activeRunId;
   const remaining = [...allElephants];
+  const shrinkDurationMs = getShrinkDurationMs();
 
   const runNext = (): void => {
     if (runId !== activeRunId) {
@@ -98,7 +140,7 @@ function startDisappearing(allElephants: Elephant[]): void {
 
       current.element.remove();
       runNext();
-    }, SHRINK_DURATION_MS);
+    }, shrinkDurationMs);
   };
 
   runNext();
@@ -107,6 +149,7 @@ function startDisappearing(allElephants: Elephant[]): void {
 function resetScene(): void {
   activeRunId += 1;
   restartButton.classList.remove('is-visible');
+  scene.style.setProperty('--shrink-duration', `${getShrinkDurationMs()}ms`);
 
   for (const elephant of elephants) {
     elephant.element.remove();
@@ -135,7 +178,22 @@ async function initialize(): Promise<void> {
   const size = await getElephantImageSize(ELEPHANT_IMAGE_PATH);
   elephantWidth = size.width;
   elephantHeight = size.height;
+  setSelectedDurationButton(DURATION_OPTIONS_MINUTES[0]);
   resetScene();
+}
+
+function getShrinkDurationMs(): number {
+  return selectedTotalDurationMs / TOTAL_ELEPHANTS;
+}
+
+function setSelectedDurationButton(minutes: number): void {
+  const buttons =
+    durationControls.querySelectorAll<HTMLButtonElement>('.duration-button');
+
+  for (const button of buttons) {
+    const isActive = button.dataset.minutes === `${minutes}`;
+    button.classList.toggle('is-active', isActive);
+  }
 }
 
 function getElephantImageSize(
