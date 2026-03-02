@@ -91,7 +91,8 @@ body,
   transform-origin: center;
   transition:
     transform var(--shrink-duration) linear,
-    opacity var(--shrink-duration) linear;
+    opacity var(--shrink-duration) linear,
+    filter var(--shrink-duration) linear;
   user-select: none;
   pointer-events: none;
 }
@@ -99,4 +100,5 @@ body,
 .elephant.shrinking {
   transform: scale(0);
   opacity: 0;
+  filter: sepia(1) saturate(3.2) hue-rotate(-16deg) brightness(1.15);
 }
