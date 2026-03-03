@@ -1,5 +1,5 @@
-import "./style.css";
-import { registerSW } from "virtual:pwa-register";
+import './style.css';
+import { registerSW } from 'virtual:pwa-register';
 
 type Elephant = {
   id: number;
@@ -15,75 +15,75 @@ const DURATION_IMAGE_BY_MINUTES: Record<
   (typeof DURATION_OPTIONS_MINUTES)[number],
   string
 > = {
-  2: assetPath("eier2min.png"),
-  4: assetPath("eier4min.png"),
-  6: assetPath("eier6min.png"),
+  2: assetPath('eier2min.png'),
+  4: assetPath('eier4min.png'),
+  6: assetPath('eier6min.png'),
 };
-const ELEPHANT_IMAGE_PATH = assetPath("elephant.gif");
+const ELEPHANT_IMAGE_PATH = assetPath('elephant.gif');
 const FALLBACK_SIZE = 120;
 
 registerSW({ immediate: true });
 
-const app = document.querySelector<HTMLDivElement>("#app");
+const app = document.querySelector<HTMLDivElement>('#app');
 
 if (!app) {
-  throw new Error("App container #app not found");
+  throw new Error('App container #app not found');
 }
 
-const scene = document.createElement("div");
-scene.className = "scene";
+const scene = document.createElement('div');
+scene.className = 'scene';
 app.append(scene);
 
-const infoContainer = document.createElement("div");
-infoContainer.className = "info";
+const infoContainer = document.createElement('div');
+infoContainer.className = 'info';
 
-const infoButton = document.createElement("button");
-infoButton.className = "info-button";
-infoButton.type = "button";
-infoButton.setAttribute("aria-label", "Installationshinweise anzeigen");
-infoButton.textContent = "i";
+const infoButton = document.createElement('button');
+infoButton.className = 'info-button';
+infoButton.type = 'button';
+infoButton.setAttribute('aria-label', 'Installationshinweise anzeigen');
+infoButton.textContent = 'i';
 
-const remainingTimeLabel = document.createElement("span");
-remainingTimeLabel.className = "remaining-time";
-remainingTimeLabel.textContent = "00:00";
+const remainingTimeLabel = document.createElement('span');
+remainingTimeLabel.className = 'remaining-time';
+remainingTimeLabel.textContent = '00:00';
 
-const infoTooltip = document.createElement("div");
-infoTooltip.className = "info-tooltip";
+const infoTooltip = document.createElement('div');
+infoTooltip.className = 'info-tooltip';
 infoTooltip.innerHTML =
-  "<strong>Eieruhr als PWA installieren</strong><br><br>" +
-  "iOS (Safari): Teilen → Zum Home-Bildschirm → Hinzufügen.<br><br>" +
-  "Android (Chrome): App installieren oder Zum Startbildschirm hinzufügen.<br><br>" +
-  "So funktioniert die Eieruhr auch ohne Internetverbindung und kann z.B. als Eieruhr in der Küche genutzt werden.<br><br>" +
+  '<strong>Eieruhr als PWA installieren</strong><br><br>' +
+  'iOS (Safari): Teilen → Zum Home-Bildschirm → Hinzufügen.<br><br>' +
+  'Android (Chrome): App installieren oder Zum Startbildschirm hinzufügen.<br><br>' +
+  'So funktioniert die Eieruhr auch ohne Internetverbindung und kann z.B. als Eieruhr in der Küche genutzt werden.<br><br>' +
   "Copyright (c) 2026 die.internauten.ch - Siehe <a href='https://github.com/internauten/ElephantsStompede' target='_blank' rel='noopener'>https://github.com/internauten/ElephantsStompede</a> für weitere Informationen, Quelltext und Lizenzinformationen.";
 
 infoContainer.append(infoButton, remainingTimeLabel, infoTooltip);
 scene.append(infoContainer);
 
-const durationControls = document.createElement("div");
-durationControls.className = "duration-controls";
+const durationControls = document.createElement('div');
+durationControls.className = 'duration-controls';
 scene.append(durationControls);
 
 let selectedTotalDurationMs = DURATION_OPTIONS_MINUTES[0] * MINUTE_MS;
 
 for (const minutes of DURATION_OPTIONS_MINUTES) {
-  const durationButton = document.createElement("button");
-  durationButton.className = "duration-button";
-  durationButton.type = "button";
+  const durationButton = document.createElement('button');
+  durationButton.className = 'duration-button';
+  durationButton.type = 'button';
   durationButton.dataset.minutes = `${minutes}`;
 
-  const icon = document.createElement("img");
-  icon.className = "duration-button-icon";
+  const icon = document.createElement('img');
+  icon.className = 'duration-button-icon';
   icon.src = DURATION_IMAGE_BY_MINUTES[minutes];
-  icon.alt = "";
-  icon.setAttribute("aria-hidden", "true");
+  icon.alt = '';
+  icon.setAttribute('aria-hidden', 'true');
 
-  const label = document.createElement("span");
-  label.className = "duration-button-label";
+  const label = document.createElement('span');
+  label.className = 'duration-button-label';
   label.textContent = `${minutes} Min.`;
 
   durationButton.append(icon, label);
 
-  durationButton.addEventListener("click", () => {
+  durationButton.addEventListener('click', () => {
     selectedTotalDurationMs = minutes * MINUTE_MS;
     setSelectedDurationButton(minutes);
     resetScene();
@@ -92,10 +92,10 @@ for (const minutes of DURATION_OPTIONS_MINUTES) {
   durationControls.append(durationButton);
 }
 
-const restartButton = document.createElement("button");
-restartButton.className = "restart-button";
-restartButton.type = "button";
-restartButton.textContent = "Neu starten";
+const restartButton = document.createElement('button');
+restartButton.className = 'restart-button';
+restartButton.type = 'button';
+restartButton.textContent = 'Neu starten';
 scene.append(restartButton);
 
 let elephants: Elephant[] = [];
@@ -109,11 +109,11 @@ let countdownIntervalId: number | null = null;
 
 void initialize();
 
-restartButton.addEventListener("click", () => {
+restartButton.addEventListener('click', () => {
   resetScene();
 });
 
-window.addEventListener("resize", () => {
+window.addEventListener('resize', () => {
   updateElephantSizeForViewport();
 
   for (const elephant of elephants) {
@@ -154,8 +154,8 @@ function placeRandomlyInTopThird(element: HTMLImageElement): void {
 }
 
 function keepInsideViewport(element: HTMLImageElement): void {
-  const currentX = parseFloat(element.style.left || "0");
-  const currentY = parseFloat(element.style.top || "0");
+  const currentX = parseFloat(element.style.left || '0');
+  const currentY = parseFloat(element.style.top || '0');
   const { width, height } = getSceneSize();
   const maxX = Math.max(0, width - elephantWidth);
   const maxY = Math.max(0, height - elephantHeight);
@@ -177,7 +177,7 @@ function startDisappearing(allElephants: Elephant[]): void {
     if (remaining.length === 0) {
       stopCountdown();
       setRemainingTime(0);
-      restartButton.classList.add("is-visible");
+      restartButton.classList.add('is-visible');
       return;
     }
 
@@ -187,7 +187,7 @@ function startDisappearing(allElephants: Elephant[]): void {
       return;
     }
 
-    current.element.classList.add("shrinking");
+    current.element.classList.add('shrinking');
 
     window.setTimeout(() => {
       if (runId !== activeRunId) {
@@ -205,8 +205,8 @@ function startDisappearing(allElephants: Elephant[]): void {
 function resetScene(): void {
   activeRunId += 1;
   startCountdown();
-  restartButton.classList.remove("is-visible");
-  scene.style.setProperty("--shrink-duration", `${getShrinkDurationMs()}ms`);
+  restartButton.classList.remove('is-visible');
+  scene.style.setProperty('--shrink-duration', `${getShrinkDurationMs()}ms`);
 
   for (const elephant of elephants) {
     elephant.element.remove();
@@ -222,8 +222,8 @@ function resetScene(): void {
   }
 
   for (let index = 0; index < TOTAL_ELEPHANTS; index += 1) {
-    const elephant = document.createElement("img");
-    elephant.className = "elephant";
+    const elephant = document.createElement('img');
+    elephant.className = 'elephant';
     elephant.src = ELEPHANT_IMAGE_PATH;
     elephant.alt = `Elefant ${index + 1}`;
     elephant.width = elephantWidth;
@@ -274,8 +274,8 @@ function formatRemainingTime(remainingMs: number): string {
   const totalSeconds = Math.ceil(remainingMs / 1000);
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
-  const paddedMinutes = String(minutes).padStart(2, "0");
-  const paddedSeconds = String(seconds).padStart(2, "0");
+  const paddedMinutes = String(minutes).padStart(2, '0');
+  const paddedSeconds = String(seconds).padStart(2, '0');
   return `${paddedMinutes}:${paddedSeconds}`;
 }
 
@@ -291,8 +291,8 @@ async function initialize(): Promise<void> {
 function updateElephantSizeForViewport(): void {
   const { width, height } = getSceneSize();
   const scale = getElephantScale(width, height);
-  elephantWidth = Math.max(36, Math.round(baseElephantWidth * scale));
-  elephantHeight = Math.max(36, Math.round(baseElephantHeight * scale));
+  elephantWidth = Math.max(24, Math.round(baseElephantWidth * scale));
+  elephantHeight = Math.max(24, Math.round(baseElephantHeight * scale));
 }
 
 function getSceneSize(): { width: number; height: number } {
@@ -325,14 +325,14 @@ function getElephantScale(
   }
 
   if (shortestSide >= 600) {
-    return isLandscape ? 0.8 : 0.76;
+    return isLandscape ? 0.75 : 0.7;
   }
 
   if (shortestSide >= 480) {
-    return 0.68;
+    return 0.58;
   }
 
-  return 0.58;
+  return 0.48;
 }
 
 function getShrinkDurationMs(): number {
@@ -341,11 +341,11 @@ function getShrinkDurationMs(): number {
 
 function setSelectedDurationButton(minutes: number): void {
   const buttons =
-    durationControls.querySelectorAll<HTMLButtonElement>(".duration-button");
+    durationControls.querySelectorAll<HTMLButtonElement>('.duration-button');
 
   for (const button of buttons) {
     const isActive = button.dataset.minutes === `${minutes}`;
-    button.classList.toggle("is-active", isActive);
+    button.classList.toggle('is-active', isActive);
   }
 }
 
