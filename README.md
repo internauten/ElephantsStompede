@@ -207,6 +207,13 @@ npm uninstall --save-dev sharp png-to-ico
 
 Ca. 90% dieses Code wurde von GPT-5.3-Codex generiert. Insgesammt wurden ca. 4 Stunden aufgewendet.
 
+## Bildnachweise / Third-Party Assets
+
+- Datei: `public/elephant.gif`
+- Quelle: [GIPHY Sticker – Canticos](https://giphy.com/stickers/Canticosworld-angry-ugh-canticos-JRVSYAvUeBh820WFtE)
+- Hinweis: Rechte und Nutzungsbedingungen für dieses Asset liegen beim jeweiligen Rechteinhaber bzw. Plattformanbieter.
+- Details: Siehe `THIRD_PARTY_NOTICES.md`.
+
 ## Lizenz
 
 Dieses Projekt steht unter der MIT-Lizenz. Details siehe `LICENSE`.
