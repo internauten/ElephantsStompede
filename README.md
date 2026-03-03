@@ -79,6 +79,44 @@ Voraussetzung: Die App läuft über `https://` (oder lokal über `localhost`).
 Hinweis: Nach der Installation startet die App im Standalone-Modus (ohne Browser-Adressleiste).
 Für iOS wird zusätzlich ein `apple-touch-icon` verwendet (`public/apple-touch-icon.png`).
 
+### Cache/Service Worker aktualisieren (bei neuen Assets)
+
+Wenn Dateien im Cache fehlen oder nach einem Deploy alte Assets geladen werden:
+
+#### Chrome (Desktop)
+
+1. App öffnen.
+2. DevTools öffnen (`F12`) -> **Application**.
+3. Unter **Service Workers** auf **Update** klicken.
+4. Unter **Storage** auf **Clear site data** klicken.
+5. Seite mit `Ctrl+F5` hart neu laden.
+6. Unter **Cache Storage** prüfen, ob die erwarteten Dateien enthalten sind.
+
+#### Android (Chrome)
+
+1. In Chrome die App-Seite öffnen.
+2. Menü (`⋮`) -> **Website-Einstellungen** -> **Speicher & Cache**.
+3. **Löschen** ausführen.
+4. Seite neu öffnen und einmal warten, bis der Service Worker wieder aktiv ist.
+5. Optional: installierte App vom Homescreen entfernen und erneut installieren.
+
+#### iOS (Safari)
+
+1. Falls installiert: App vom Home-Bildschirm löschen.
+2. **Einstellungen -> Safari -> Verlauf und Websitedaten löschen**.
+3. Safari neu öffnen und die Seite erneut aufrufen.
+4. Erneut über **Teilen -> Zum Home-Bildschirm** installieren.
+
+Hinweis: Das erste Laden nach Cache-Löschung benötigt Internet, danach läuft die PWA wieder offline.
+
+### Troubleshooting (kurz)
+
+- **Alter Service Worker aktiv:** In DevTools unter **Application -> Service Workers** auf **Update** klicken und Seite hart neu laden.
+- **Falscher Base-Pfad:** Prüfen, ob `base` in `vite.config.ts` zur Deploy-URL passt (z. B. GitHub Pages Projektpfad).
+- **Kein HTTPS:** Installation und SW funktionieren nur mit `https://` (Ausnahme: `localhost`).
+- **Assets nicht im Precache:** In `vite.config.ts` unter `VitePWA(... includeAssets ...)` sicherstellen, dass alle benötigten Dateien gelistet sind.
+- **Manifest/Icons veraltet:** Nach Icon-Änderungen `npm run pwa-icons:generate` und anschließend `npm run build` ausführen.
+
 ### Wenn "App installieren" in Chrome nicht erscheint
 
 - Die Seite muss über `https://` laufen (Ausnahme: `localhost`).

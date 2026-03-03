@@ -18,6 +18,8 @@ export default defineConfig(() => {
           'favicon.ico',
           'pwa-192.png',
           'pwa-512.png',
+          'screenshot-mobile.png',
+          'screenshot-wide.png',
         ],
         manifest: {
           name: 'Elephants Stompede',
@@ -38,6 +40,21 @@ export default defineConfig(() => {
               src: 'pwa-512.png',
               sizes: '512x512',
               type: 'image/png',
+            },
+          ],
+          screenshots: [
+            {
+              src: 'screenshot-mobile.png',
+              sizes: '750x1334',
+              type: 'image/png',
+              label: 'Elephants Stompede mobile view',
+            },
+            {
+              src: 'screenshot-wide.png',
+              sizes: '1280x720',
+              type: 'image/png',
+              form_factor: 'wide',
+              label: 'Elephants Stompede desktop view',
             },
           ],
         },
