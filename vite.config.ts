@@ -12,6 +12,7 @@ export default defineConfig(() => {
         includeAssets: [
           'apple-touch-icon.png',
           'elephant.gif',
+          'elephant7.gif',
           'eier2min.png',
           'eier4min.png',
           'eier6min.png',

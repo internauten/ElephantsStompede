@@ -40,12 +40,56 @@ body,
   gap: 8px;
 }
 
+.info-button-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
 .remaining-time {
   color: #e2e8f0;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
+}
+
+.elephant-toggle {
+  width: 38px;
+  height: 22px;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: #1e293b;
+  cursor: pointer;
+  position: relative;
+  transition: background 120ms ease;
+}
+
+.elephant-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #94a3b8;
+  transition:
+    transform 120ms ease,
+    background 120ms ease;
+}
+
+.elephant-toggle:hover {
+  background: #334155;
+}
+
+.elephant-toggle:focus-visible {
+  outline: 2px solid #e2e8f0;
+  outline-offset: 2px;
+}
+
+.elephant-toggle.is-alt::after {
+  background: #e2e8f0;
+  transform: translateX(16px);
 }
 
 .info-button {
@@ -82,8 +126,8 @@ body,
   pointer-events: none;
 }
 
-.info:hover .info-tooltip,
-.info:focus-within .info-tooltip {
+.info-button-wrap:hover .info-tooltip,
+.info-button-wrap:focus-within .info-tooltip {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -158,14 +202,15 @@ body,
 .elephant.shrinking {
   transform: scale(0);
   opacity: 0;
-  filter: sepia(1) saturate(4.8) hue-rotate(-50deg) brightness(0.95) contrast(1.1);
+  filter: sepia(1) saturate(4.8) hue-rotate(-50deg) brightness(0.95)
+    contrast(1.1);
 }
 
 a {
-    color: palegoldenrod;
-    text-decoration: none;
+  color: palegoldenrod;
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

@@ -19,7 +19,8 @@ const DURATION_IMAGE_BY_MINUTES: Record<
   4: assetPath('eier4min.png'),
   6: assetPath('eier6min.png'),
 };
-const ELEPHANT_IMAGE_PATH = assetPath('elephant.gif');
+const ELEPHANT_IMAGE_DEFAULT_PATH = assetPath('elephant.gif');
+const ELEPHANT_IMAGE_ALT_PATH = assetPath('elephant7.gif');
 const FALLBACK_SIZE = 120;
 
 registerSW({ immediate: true });
@@ -43,9 +44,22 @@ infoButton.type = 'button';
 infoButton.setAttribute('aria-label', 'Installationshinweise anzeigen');
 infoButton.textContent = 'i';
 
+const infoButtonWrap = document.createElement('div');
+infoButtonWrap.className = 'info-button-wrap';
+
 const remainingTimeLabel = document.createElement('span');
 remainingTimeLabel.className = 'remaining-time';
 remainingTimeLabel.textContent = '00:00';
+
+const elephantToggleButton = document.createElement('button');
+elephantToggleButton.className = 'elephant-toggle';
+elephantToggleButton.type = 'button';
+elephantToggleButton.setAttribute(
+  'aria-label',
+  'Zwischen Elefanten-Bildern wechseln',
+);
+elephantToggleButton.setAttribute('role', 'switch');
+elephantToggleButton.setAttribute('aria-checked', 'false');
 
 const infoTooltip = document.createElement('div');
 infoTooltip.className = 'info-tooltip';
@@ -56,7 +70,8 @@ infoTooltip.innerHTML =
   'So funktioniert die Eieruhr auch ohne Internetverbindung und kann z.B. als Eieruhr in der Küche genutzt werden.<br><br>' +
   "Copyright (c) 2026 die.internauten.ch - Siehe <a href='https://github.com/internauten/ElephantsStompede' target='_blank' rel='noopener'>https://github.com/internauten/ElephantsStompede</a> für weitere Informationen, Quelltext und Lizenzinformationen.";
 
-infoContainer.append(infoButton, remainingTimeLabel, infoTooltip);
+infoButtonWrap.append(infoButton, infoTooltip);
+infoContainer.append(infoButtonWrap, remainingTimeLabel, elephantToggleButton);
 scene.append(infoContainer);
 
 const durationControls = document.createElement('div');
@@ -106,11 +121,17 @@ let elephantWidth = FALLBACK_SIZE;
 let elephantHeight = FALLBACK_SIZE;
 let countdownEndAt = 0;
 let countdownIntervalId: number | null = null;
+let selectedElephantImagePath = ELEPHANT_IMAGE_DEFAULT_PATH;
+let isAltElephantSelected = false;
 
 void initialize();
 
 restartButton.addEventListener('click', () => {
   resetScene();
+});
+
+elephantToggleButton.addEventListener('click', () => {
+  void toggleElephantVariant();
 });
 
 window.addEventListener('resize', () => {
@@ -230,7 +251,7 @@ function resetScene(): void {
   for (let index = 0; index < TOTAL_ELEPHANTS; index += 1) {
     const elephant = document.createElement('img');
     elephant.className = 'elephant';
-    elephant.src = ELEPHANT_IMAGE_PATH;
+    elephant.src = selectedElephantImagePath;
     elephant.alt = `Elefant ${index + 1}`;
     elephant.width = elephantWidth;
     elephant.height = elephantHeight;
@@ -286,11 +307,30 @@ function formatRemainingTime(remainingMs: number): string {
 }
 
 async function initialize(): Promise<void> {
-  const size = await getElephantImageSize(ELEPHANT_IMAGE_PATH);
+  const size = await getElephantImageSize(selectedElephantImagePath);
   baseElephantWidth = size.width;
   baseElephantHeight = size.height;
   updateElephantSizeForViewport();
   setSelectedDurationButton(DURATION_OPTIONS_MINUTES[0]);
+  resetScene();
+}
+
+async function toggleElephantVariant(): Promise<void> {
+  isAltElephantSelected = !isAltElephantSelected;
+  selectedElephantImagePath = isAltElephantSelected
+    ? ELEPHANT_IMAGE_ALT_PATH
+    : ELEPHANT_IMAGE_DEFAULT_PATH;
+
+  elephantToggleButton.classList.toggle('is-alt', isAltElephantSelected);
+  elephantToggleButton.setAttribute(
+    'aria-checked',
+    isAltElephantSelected ? 'true' : 'false',
+  );
+
+  const size = await getElephantImageSize(selectedElephantImagePath);
+  baseElephantWidth = size.width;
+  baseElephantHeight = size.height;
+  updateElephantSizeForViewport();
   resetScene();
 }
 
