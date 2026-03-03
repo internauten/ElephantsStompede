@@ -187,16 +187,22 @@ function startDisappearing(allElephants: Elephant[]): void {
       return;
     }
 
-    current.element.classList.add('shrinking');
-
-    window.setTimeout(() => {
+    window.requestAnimationFrame(() => {
       if (runId !== activeRunId) {
         return;
       }
 
-      current.element.remove();
-      runNext();
-    }, shrinkDurationMs);
+      current.element.classList.add('shrinking');
+
+      window.setTimeout(() => {
+        if (runId !== activeRunId) {
+          return;
+        }
+
+        current.element.remove();
+        runNext();
+      }, shrinkDurationMs);
+    });
   };
 
   runNext();
