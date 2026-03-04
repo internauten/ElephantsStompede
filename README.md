@@ -1,6 +1,14 @@
 # Elephants Stompede (oder Eieruhr)
 
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-ea4aaa?logo=githubsponsors&logoColor=white&style=flat-square)](https://github.com/sponsors/internauten) [![GitHub Repo stars](https://img.shields.io/github/stars/internauten/ElephantsStompede?style=flat-square)](https://github.com/internauten/ElephantsStompede/stargazers) [![GitHub release](https://img.shields.io/github/v/release/internauten/ElephantsStompede?style=flat-square)](https://github.com/internauten/ElephantsStompede/releases) [![Deploy to GitHub Pages](https://img.shields.io/github/actions/workflow/status/internauten/ElephantsStompede/deploy-pages.yml?branch=main&style=flat-square&label=deploy)](https://github.com/internauten/ElephantsStompede/actions/workflows/deploy-pages.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+
 Eine Elefantenherde die sich langsam auflöst. Eine moderne Eieruhr!
+
+## Sponsoring
+
+Wenn dir dieses Projekt hilft oder gefällt, kannst du die Weiterentwicklung über GitHub Sponsors unterstützen:
+
+- https://github.com/sponsors/internauten
 
 ## Projektbeschreibung
 
