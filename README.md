@@ -224,6 +224,6 @@ Ca. 90% dieses Code wurde von GPT-5.3-Codex generiert. Insgesammt wurden ca. 4 S
 
 ## Lizenz
 
-Dieses Projekt steht unter der MIT-Lizenz. Details siehe `LICENSE`.
+Dieses Projekt steht unter der MIT-Lizenz. Details siehe [`LICENSE`](LICENSE).
 
 Copyright (c) 2026 die.internauten.ch
